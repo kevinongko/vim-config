@@ -14,7 +14,7 @@ echo "Changing to the $config directory"
 cd $config
 
 # Check if vim-plug downloaded
-if [ ! -f $config/autoload/plug.vim ]; then
+if [ ! -f $config/.vim/autoload/plug.vim ]; then
     echo "Installing vim-plug"
     curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
