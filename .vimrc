@@ -14,8 +14,6 @@ Plug 'honza/vim-snippets'
 Plug 'jiangmiao/auto-pairs'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'kassio/neoterm'
-Plug 'mhinz/vim-startify'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-surround'
@@ -67,10 +65,6 @@ let NERDTreeCascadeSingleChildDir=0 "disable auto collapse single children folde
 
 " closetag
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.vue"
-"
-" neoterm
-let g:neoterm_autoinsert = 1
-let g:neoterm_default_mod = 'rightbelow'
 
 " vim-esearch
 let g:esearch = {
@@ -119,6 +113,9 @@ set smarttab
 set softtabstop=4
 set t_Co=256
 set tabstop=4
+set ttyfast
+set lazyredraw
+set splitbelow
 syntax on
 filetype plugin indent on
 "highlight Comment cterm=italic
@@ -132,6 +129,7 @@ map <F4> :FixWhitespace <CR>
 map <F5> :NERDTreeTabsToggle <CR>
 nmap <leader><space> :nohlsearch <CR>
 map <C-P> :FZF <CR>
+tnoremap <Esc> <C-\><C-n>
 
 " Tab
 nnoremap <C-Left> :tabprevious<CR>
