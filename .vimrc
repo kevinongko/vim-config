@@ -1,25 +1,26 @@
 "-----Plugins-----"
-call plug#begin('~/.vim/plugged')
+call plug#begin("~/.vim/plugged")
 
 " feature
-Plug 'SirVer/ultisnips'
-Plug 'Valloric/YouCompleteMe'
-Plug 'Yggdroot/indentLine'
-Plug 'alvan/vim-closetag'
+"Plug 'SirVer/ultisnips'
+"Plug 'Valloric/YouCompleteMe'
+"Plug 'Yggdroot/indentLine'
+"Plug 'alvan/vim-closetag'
+"Plug 'gregsexton/MatchTag'
+"Plug 'honza/vim-snippets'
+Plug 'jiangmiao/auto-pairs'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'ervandew/supertab'
 Plug 'eugen0329/vim-esearch'
-Plug 'gregsexton/MatchTag'
-Plug 'honza/vim-snippets'
-Plug 'jiangmiao/auto-pairs'
+Plug 'itchyny/lightline.vim'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'justinmk/vim-sneak'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-surround'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
+Plug 'zivyangll/git-blame.vim'
 
 " theme
 Plug 'NLKNguyen/papercolor-theme'
@@ -27,6 +28,8 @@ Plug 'morhetz/gruvbox'
 Plug 'rakr/vim-two-firewatch'
 Plug 'romainl/flattened'
 Plug 'tomasr/molokai'
+Plug 'kaicataldo/material.vim'
+Plug 'gruvbox-material/vim', {'as': 'gruvbox-material'}
 
 " syntax
 Plug 'StanAngeloff/php.vim'
@@ -35,7 +38,7 @@ Plug 'jwalton512/vim-blade'
 Plug 'othree/html5.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'posva/vim-vue'
-Plug 'wavded/vim-stylus'
+Plug 'leafgarland/typescript-vim'
 
 call plug#end()
 
@@ -43,25 +46,24 @@ call plug#end()
 
 " theme
 set termguicolors
-colorscheme gruvbox
+let g:gruvbox_material_background = 'medium'
+let g:gruvbox_material_disable_italic_comment = 1
+colorscheme gruvbox-material
 set background=dark
+"let g:material_theme_style = 'darker'
 "let g:two_firewatch_italics=1
 "let g:molokai_original = 1
-
-" stylus hightlight flex
-hi link stylusProperty cssVisualProp
-
-" vim-airline
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
-let g:airline#extensions#tabline#enabled = 0 "buffer indicator
-let g:airline_powerline_fonts = 1 "powerline font for airline
-let g:airline_theme = 'gruvbox'
 
 " nerdtree
 let NERDTreeShowHidden=1 "show hidden files
 let NERDTreeIgnore=['\.git$', '\.DS_Store$', '\.swp$', '.gitkeep', '.gitattributes', '.idea', '.vscode'] "hide certain file types
 let NERDTreeCascadeSingleChildDir=0 "disable auto collapse single children folder
+
+" lightline
+" let g:lightline = { 'colorscheme': 'gruvbox' }
+" let g:lightline = { 'colorscheme': 'material_vim' }
+let g:lightline = {'colorscheme' : 'gruvbox_material'}
+" let g:lightline = { 'colorscheme': 'PaperColor' }
 
 " closetag
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.vue"
@@ -76,17 +78,31 @@ let g:esearch = {
   \ 'default_mappings': 1,
   \}
 
+" vim-surround
+let g:surround_no_mappings = 1
+
 " ultisnips
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+" let g:UltiSnipsExpandTrigger="<tab>"
+" let g:UltiSnipsJumpForwardTrigger="<tab>"
+" let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 " ycm
-let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
+" let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
+" let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
 
 " supertab
 let g:SuperTabDefaultCompletionType = '<C-n>'
+
+" nerdcommenter
+let g:NERDSpaceDelims = 1
+let g:NERDTrimTrailingWhitespace = 1
+let g:NERDDefaultAlign = 'left'
+
+" ale
+let g:ale_linter_aliases = {'vue': ['vue', 'javascript']}
+let g:ale_fixers = {'javascript': ['eslint'], 'vue': ['eslint']}
+let g:ale_linters = {'javascript': ['eslint'], 'vue': ['eslint', 'vls']}
+let g:ale_fix_on_save = 1
 
 " vim
 let mapleader = ' '
@@ -100,7 +116,7 @@ set expandtab
 set hlsearch
 set ignorecase
 set incsearch
-set laststatus=1
+set laststatus=2
 set mouse=a
 set nowrap
 set number
@@ -130,6 +146,13 @@ map <F5> :NERDTreeTabsToggle <CR>
 nmap <leader><space> :nohlsearch <CR>
 map <C-P> :FZF <CR>
 tnoremap <Esc> <C-\><C-n>
+map f <Plug>Sneak_s
+map F <Plug>Sneak_S
+nmap sc <Plug>Csurround
+nmap sd <Plug>Dsurround
+nmap sy <Plug>Ysurround
+xmap sv <Plug>VSurround
+nnoremap <Leader>0 :<C-u>call gitblame#echo()<CR>
 
 " Tab
 nnoremap <C-Left> :tabprevious<CR>
@@ -158,15 +181,13 @@ autocmd! BufEnter * :syntax sync fromstart
 " Delete white space on save
 autocmd! BufWritePre * FixWhitespace
 
-" Set stylus omnifunction
-autocmd FileType stylus setlocal omnifunc=csscomplete#CompleteCSS
-
 " Spacing file types
 autocmd Filetype blade setlocal ts=4 sts=4 sw=4
 autocmd Filetype html setlocal ts=2 sts=2 sw=2
+autocmd Filetype json setlocal ts=2 sts=2 sw=2
 autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
 autocmd Filetype php setlocal ts=4 sts=4 sw=4
 autocmd Filetype sass setlocal ts=4 sts=4 sw=4
 autocmd Filetype scss setlocal ts=4 sts=4 sw=4
-autocmd Filetype stylus setlocal ts=4 sts=4 sw=4
 autocmd Filetype vue setlocal ts=2 sts=2 sw=2
+autocmd Filetype typescript setlocal ts=2 sts=2 sw=2
